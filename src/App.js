@@ -10,14 +10,24 @@ import Posts from "./containers/Posts";
 import Invoices from "./containers/Invoices.jsx";
 import Invoice from "./containers/Invoice";
 
-class App extends Component{
-    render(){
+import Signin from './containers/Signin';
+import Profile from './containers/Profile';
+
+function App(){
+
+    const token = localStorage.getItem('acessToken');
+
+    if(!token){
+        return <Signin />
+    }
+
         return (
             <div className="App">
                 <h1>WaterMelon Market</h1>
                 <Header />
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="profile" element={<Profile />} />
                     <Route path="about" element={<About />} />
                     <Route path="posts" element={<Posts />} />
                     <Route path="invoices" element={<Invoices />}>
@@ -39,7 +49,6 @@ class App extends Component{
                 </Routes>
             </div>
         );
-    }
 }
 
 export default App;
