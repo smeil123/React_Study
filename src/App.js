@@ -15,7 +15,7 @@ import Profile from './containers/Profile';
 
 function App(){
 
-    const token = localStorage.getItem('acessToken');
+    const token = localStorage.getItem('accessToken');
 
     if(!token){
         return <Signin />
@@ -39,6 +39,7 @@ function App(){
                             }/>
                         <Route path=":invoiceId" element={<Invoice />} /> 
                     </Route>
+                    <Route path="signin" element={<Signin />} />
                     <Route path="*"
                         element={
                             <main style={{padding:"1rem"}}>

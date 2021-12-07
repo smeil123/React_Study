@@ -9,6 +9,18 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import swal from 'sweetalert';
+import { ErrorBoundary,errorService } from 'react-error-boundary';
+// import {applyMiddleware, createStore} from 'redux';
+// import { createLogger } from 'redux-logger';
+
+// const logger = createLogger({
+//     predicate: (getState, action) => action.type !== AUTH_REMOVE_TOKEN
+// })
+
+// const store = createStore(
+//     reducer,
+//     applyMiddleware(logger)
+// )
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,6 +49,16 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
+//error logging
+function MyFallbackComponent({error, resetErrorBoundary}){
+    return(
+        <div role="alert">
+            <p>Something went wrong;</p>
+            <pre>{error.message}</pre>
+            <button onClick={resetErrorBoundary}>Try again</button>
+        </div>
+    )
+}
 
 // API Call
 async function loginUser(credentials){
@@ -54,13 +76,14 @@ export default function Signin(){
     const classes = useStyles();
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
-
+    console.log(username, password);
     const handleSubmit = async e =>{
-        e.preventDefaut(); //??
+        e.preventDefault();
         const response = await loginUser({
             username,
             password
         }); //login API Call
+        alert(JSON.stringify(response));
         if('accessToken' in response){
             //alert (subject, message, state)
             swal("Succeess", response.message, "success",{
@@ -69,6 +92,7 @@ export default function Signin(){
             })
             .then((value)=> {
                 // local 에 필요값들 저장해주고, profile redirect
+                alert("success");
                 localStorage.setItem('accessToken', response['accessToken']);
                 localStorage.setItem('user', JSON.stringify(response['user']));
                 window.location.href = "/profile";
@@ -90,40 +114,48 @@ export default function Signin(){
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <form className={classes.form} noValidate onSubmit={handleSubmit}>
-                        <TextField 
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            name="email"
-                            label="Email Address"
-                            onChange={e => setUserName(e.target.value)}
-                        />
-                        <TextField 
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="password"
-                            name="password"
-                            label="Password"
-                            type="password"
-                            onChange={e => setUserName(e.target.value)}
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Sign In
-                        </Button>             
-                    </form>
+                    <ErrorBoundary
+                        FallbackComponent={MyFallbackComponent}
+                        onError={(error, errorInfo) => errorService.log({error, errorInfo})}
+                        onReset={()=>{
+                            //reset the state of my app
+                        }}
+                    >
+                        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                            <TextField 
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="username"
+                                name="email"
+                                label="Email Address"
+                                onChange={e => setUserName(e.target.value)}
+                            />
+                            <TextField 
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="password"
+                                name="password"
+                                label="Password"
+                                type="password"
+                                onChange={e => setPassword(e.target.value)}
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                            >
+                                Sign In
+                            </Button>             
+                        </form>
+                    </ErrorBoundary>
                 </div>
             </Grid>
         </Grid>
-    )
+    );
 }
