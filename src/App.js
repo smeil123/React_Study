@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import {Routes, Route, Link} from 'react-router-dom';
 
 import Header from "./components/Header"
+import useToken from "./components/useToken"
 
 import Home from "./containers/Home";
 import About from "./containers/About";
@@ -15,10 +16,10 @@ import Profile from './containers/Profile';
 
 function App(){
 
-    const token = localStorage.getItem('accessToken');
+    const { token, setToken } = useToken();
 
     if(!token){
-        return <Signin />
+        return <Signin setToken={setToken}/>
     }
 
         return (

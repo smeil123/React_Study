@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -76,7 +77,6 @@ export default function Signin(){
     const classes = useStyles();
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
-    console.log(username, password);
     const handleSubmit = async e =>{
         e.preventDefault();
         const response = await loginUser({
@@ -92,9 +92,9 @@ export default function Signin(){
             })
             .then((value)=> {
                 // local 에 필요값들 저장해주고, profile redirect
-                alert("success");
-                localStorage.setItem('accessToken', response['accessToken']);
+                localStorage.setItem('token', response['accessToken']);
                 localStorage.setItem('user', JSON.stringify(response['user']));
+
                 window.location.href = "/profile";
             });
         } else{
