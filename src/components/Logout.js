@@ -1,15 +1,16 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 
 const logout = () => {
-    localStorage.setItem('accessToken', null);
+    localStorage.clear();
+
+    window.location.href = "/signin";
 }
 
 export default function Logout(){
     const handlClick = () =>{
+        alert("logout");
         logout();
     };
-    alert("logout");
     return <button onClick={handlClick}>Logout</button>;
 }
 

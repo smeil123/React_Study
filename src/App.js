@@ -17,8 +17,8 @@ import Profile from './containers/Profile';
 function App(){
 
     const { token, setToken } = useToken();
-
-    if(!token){
+    
+    if(!token || token==undefined){
         return <Signin setToken={setToken}/>
     }
 
@@ -40,7 +40,7 @@ function App(){
                             }/>
                         <Route path=":invoiceId" element={<Invoice />} /> 
                     </Route>
-                    <Route path="signin" element={<Signin />} />
+                    <Route path="signin" element={<Signin setToken={setToken}/>} />
                     <Route path="*"
                         element={
                             <main style={{padding:"1rem"}}>
