@@ -11,7 +11,8 @@
   
   .menu {
     background-color: #ffffff;
-    height: 3.5rem;
+    flex-wrap: wrap;
+    /* height: 3.5rem; */
   }
   
   .menu-item {

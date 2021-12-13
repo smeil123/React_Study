@@ -7,11 +7,7 @@ const logout = () => {
 }
 
 export default function Logout(){
-    const handlClick = () =>{
-        alert("logout");
-        logout();
-    };
-    return <button onClick={handlClick}>Logout</button>;
+    return logout();
 }
 
 //export default withRouter(Logout);

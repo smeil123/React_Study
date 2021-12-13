@@ -4,6 +4,7 @@ import {Routes, Route, Link} from 'react-router-dom';
 
 import Header from "./components/Header"
 import useToken from "./components/useToken"
+import Logout from './components/Logout';
 
 import Home from "./containers/Home";
 import About from "./containers/About";
@@ -18,9 +19,9 @@ function App(){
 
     const { token, setToken } = useToken();
     
-    if(!token || token==undefined){
-        return <Signin setToken={setToken}/>
-    }
+    // if(!token || token==undefined){
+    //     return <Signin setToken={setToken}/>
+    // }
 
         return (
             <div className="App">
@@ -41,6 +42,8 @@ function App(){
                         <Route path=":invoiceId" element={<Invoice />} /> 
                     </Route>
                     <Route path="signin" element={<Signin setToken={setToken}/>} />
+                    <Route path="logout" element={<Logout />} />
+                    <Route path="signup" element={<Home />} />
                     <Route path="*"
                         element={
                             <main style={{padding:"1rem"}}>
