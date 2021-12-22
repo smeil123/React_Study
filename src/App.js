@@ -13,6 +13,7 @@ import Invoices from "./containers/Invoices.jsx";
 import Invoice from "./containers/Invoice";
 
 import Signin from './containers/Signin';
+import Signup from './containers/Signup';
 import Profile from './containers/Profile';
 
 function App(){
@@ -43,7 +44,7 @@ function App(){
                     </Route>
                     <Route path="signin" element={<Signin setToken={setToken}/>} />
                     <Route path="logout" element={<Logout />} />
-                    <Route path="signup" element={<Home />} />
+                    <Route path="signup" element={<Signup />} />
                     <Route path="*"
                         element={
                             <main style={{padding:"1rem"}}>
