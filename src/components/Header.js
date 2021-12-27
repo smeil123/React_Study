@@ -18,7 +18,7 @@ function Header(){
                 <div className="menu">
                     <Link to="/"><MenuItem>홈</MenuItem></Link>
                     <Link to="/about"><MenuItem>인기매물</MenuItem></Link>
-                    <Link to="/posts"><MenuItem>회원가입</MenuItem></Link>
+                    <Link to="/posts"><MenuItem>글쓰기</MenuItem></Link>
                     <Link to="/invoices"><MenuItem>디테일</MenuItem></Link>
                     <Link to="/signup"><MenuItem>회원가입</MenuItem></Link>
                     <Link to="/signin"><MenuItem>로그인</MenuItem></Link>
@@ -33,7 +33,7 @@ function Header(){
                 <div className="menu">
                     <Link to="/"><MenuItem>홈</MenuItem></Link>
                     <Link to="/about"><MenuItem>인기매물</MenuItem></Link>
-                    <Link to="/posts"><MenuItem>회원가입</MenuItem></Link>
+                    <Link to="/posts"><MenuItem>글쓰기</MenuItem></Link>
                     <Link to="/invoices"><MenuItem>디테일</MenuItem></Link>
                     <Link to="/profile"><MenuItem>프로파일</MenuItem></Link>
                     <Link to="/logout"><MenuItem>로그아웃</MenuItem></Link>

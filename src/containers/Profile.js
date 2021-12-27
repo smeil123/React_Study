@@ -1,14 +1,16 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import Avatar from '@material-ui/core/Avatar';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+// import AppBar from '@material-ui/core/AppBar';
+// import Toolbar from '@material-ui/core/Toolbar';
+// import Typography from '@material-ui/core/Typography';
+// import IconButton from '@material-ui/core/IconButton';
+// import MenuItem from '@material-ui/core/MenuItem';
+// import Menu from '@material-ui/core/Menu';
+// import Avatar from '@material-ui/core/Avatar';
+// import Card from '@material-ui/core/Card';
+// import CardContent from '@material-ui/core/CardContent';
+
+import getUser from "../components/getUser";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,29 +28,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Profile(){
+export default async function Profile(){
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const user = JSON.parse(localStorage.getItem('user'));
+    // const [anchorEl, setAnchorEl] = React.useState(null);
+    // const open = Boolean(anchorEl);
+    const token = JSON.parse(localStorage.getItem('token'));
+    const user = await getUser(localStorage.getItem('email'));
 
-    const handleMenu = (event) =>{
-        setAnchorEl(event.cuurentTaget);
-    };
+    // const handleMenu = (event) =>{
+    //     setAnchorEl(event.cuurentTaget);
+    // };
 
-    const handleClose = () =>{
-        setAnchorEl(null);
-    }
+    // const handleClose = () =>{
+    //     setAnchorEl(null);
+    // }
 
-    const handleLogout = () =>{
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("user");
-        window.location.href = "/";
-    };
+    // const handleLogout = () =>{
+    //     localStorage.removeItem("token");
+    //     window.location.href = "/";
+    // };
 
     return(
         <div>
-            <AppBar position="static">
+            {/* <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>
                         Profile
@@ -73,7 +75,11 @@ export default function Profile(){
                         Welcome {user.fname} {user.lname}
                     </Typography>
                 </CardContent>
-            </Card>
+            </Card> */}
+            <p>{user.email}</p>
+            <p>{user.nickname}</p>
+            <p>{user.role}</p>
+            <p>{user.city_1}</p>
         </div>
     );
 }

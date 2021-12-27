@@ -12,18 +12,16 @@ import Posts from "./containers/Posts";
 import Invoices from "./containers/Invoices.jsx";
 import Invoice from "./containers/Invoice";
 
-import Signin from './containers/Signin';
+import Signin from './containers/Login';
 import Signup from './containers/Signup';
 import Profile from './containers/Profile';
+
 
 function App(){
 
     const { token, setToken } = useToken();
-    
     // if(!token || token==undefined){
-    //     return <Signin setToken={setToken}/>
     // }
-
         return (
             <div className="App">
                 <h1>WaterMelon Market</h1>

@@ -11,17 +11,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import swal from 'sweetalert';
 import { ErrorBoundary,errorService } from 'react-error-boundary';
-// import {applyMiddleware, createStore} from 'redux';
-// import { createLogger } from 'redux-logger';
+import axios from 'axios';
 
-// const logger = createLogger({
-//     predicate: (getState, action) => action.type !== AUTH_REMOVE_TOKEN
-// })
-
-// const store = createStore(
-//     reducer,
-//     applyMiddleware(logger)
-// )
+import useCookie from "../components/useCookie";
+import signInUser from "../components/signInUser";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -61,47 +54,42 @@ function MyFallbackComponent({error, resetErrorBoundary}){
     )
 }
 
-// API Call
-async function loginUser(credentials){
-    return fetch('https://www.mecallapi.com/api/login',{
-        method : 'POST',
-        headers : {
-            'Content-Type' : 'application/json'
-        },
-        body : JSON.stringify(credentials)
-    })
-    .then(data => data.json())
-}
 
 export default function Signin(){
     const classes = useStyles();
-    const [username, setUserName] = useState();
+    const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+
     const handleSubmit = async e =>{
         e.preventDefault();
-        const response = await loginUser({
-            username,
+        const res = await signInUser({
+            email,
             password
-        }); //login API Call
-        alert(JSON.stringify(response));
-        if('accessToken' in response){
-            //alert (subject, message, state)
-            swal("Succeess", response.message, "success",{
-                buttons : false.valueOf,
-                timer : 2000,
-            })
-            .then((value)=> {
-                // local 에 필요값들 저장해주고, profile redirect
-                localStorage.setItem('token', response['accessToken']);
-                localStorage.setItem('user', JSON.stringify(response['user']));
+        });
+        try{
+            console.log(res);
+            if(res.status == 200){                
+                swal("Succeess",res.data, "success",{
+                    buttons : false.valueOf,
+                    timer : 2000,
+                })
+                .then((value)=> {
+                    // local 에 필요값들 저장해주고, profile redirect
+                    console.log(useCookie("SESSION","TT"));
+                    localStorage.setItem('token', document.cookie.SESSION);
+                    localStorage.setItem('email', email);
 
-                window.location.href = "/profile";
-            });
-        } else{
-            swal("Failed", response.message, "error");
+                    window.location.href = "/";
+                });
+            }else{
+                swal("Failed", "error");
+            }
+        }
+        catch(err){
+            console.log("err", err);            
+            swal("Failed", "error");
         }
     }
-
     return (
         <Grid container className={classes.root}>
             <CssBaseline />
@@ -130,7 +118,7 @@ export default function Signin(){
                                 id="username"
                                 name="email"
                                 label="Email Address"
-                                onChange={e => setUserName(e.target.value)}
+                                onChange={e => setEmail(e.target.value)}
                             />
                             <TextField 
                                 variant="outlined"
