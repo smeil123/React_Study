@@ -8,7 +8,7 @@ import Logout from './components/Logout';
 
 import Home from "./containers/Home";
 import About from "./containers/About";
-import Posts from "./containers/Posts";
+import Posts from "./containers/Posts.jsx";
 import Invoices from "./containers/Invoices.jsx";
 import Invoice from "./containers/Invoice";
 

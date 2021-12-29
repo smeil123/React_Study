@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -14,6 +14,7 @@ import { ErrorBoundary,errorService } from 'react-error-boundary';
 import axios from 'axios';
 
 import useCookie from "../components/useCookie";
+import deleteCookie from "../components/deleteCookie"
 import signInUser from "../components/signInUser";
 
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +60,11 @@ export default function Signin(){
     const classes = useStyles();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [session, updateCookie] = useCookie("SESSION",null);
+
+    useEffect(()=>{
+        deleteCookie("SESSION");
+    })
 
     const handleSubmit = async e =>{
         e.preventDefault();
@@ -69,25 +75,26 @@ export default function Signin(){
         try{
             console.log(res);
             if(res.status == 200){                
-                swal("Succeess",res.data, "success",{
+                swal("Succeess","로그인 성공", "success",{
                     buttons : false.valueOf,
                     timer : 2000,
                 })
                 .then((value)=> {
                     // local 에 필요값들 저장해주고, profile redirect
-                    console.log(useCookie("SESSION","TT"));
-                    localStorage.setItem('token', document.cookie.SESSION);
+                    console.log(document.cookie);
+                    updateCookie("MjMxZWZmNjItMmQxZi00MGRjLWExNGQtYzk4YmJlMjJlN2Rh",1);
+                    localStorage.setItem('token', "MjMxZWZmNjItMmQxZi00MGRjLWExNGQtYzk4YmJlMjJlN2Rh");
                     localStorage.setItem('email', email);
 
                     window.location.href = "/";
                 });
             }else{
-                swal("Failed", "error");
+                swal("Failed","로그인 실패", "error");
             }
         }
         catch(err){
             console.log("err", err);            
-            swal("Failed", "error");
+            swal("Failed","err","error");
         }
     }
     return (

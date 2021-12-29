@@ -50,5 +50,5 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.3"
   },
-  "proxy": "https://wm-market.herokuapp.com/"
+  "proxy": "http://localhost:8080/"
 }
