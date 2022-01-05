@@ -3,8 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/pickers": "^3.3.10",
+    "@mui/icons-material": "^5.2.5",
+    "@mui/material": "^5.2.6",
+    "@mui/styled-engine-sc": "^5.1.0",
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",
@@ -20,6 +26,7 @@
     "react-router-dom": "^6.0.2",
     "react-scripts": "^0.9.5",
     "redux-logger": "^3.0.6",
+    "styled-components": "^5.3.3",
     "sweetalert": "^2.1.2",
     "web-vitals": "^1.1.2"
   },
@@ -50,5 +57,5 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.3"
   },
-  "proxy": "http://localhost:8080/"
+  "proxy": "https://wm-market.herokuapp.com/"
 }

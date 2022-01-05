@@ -19,10 +19,8 @@ async function logout(){
 
 
 export default async function Logout(){
-    const result = await logout().then(res=>{
-        window.location.href = "/";
-    })
-    
+    const result = await logout();
+    window.location.href = "/";    
     return;
 }
 
