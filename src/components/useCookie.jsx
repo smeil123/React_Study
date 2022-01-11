@@ -5,7 +5,7 @@ const getItem = key =>
     const item = currentCookie.split("=");
     const storedKey = item[0];
     const storedValue = item[1];
-
+    
     return key === storedKey ? decodeURIComponent(storedValue) : total;
   }, "");
 
@@ -23,6 +23,7 @@ const useCookie = (key, defaultValue) => {
     const [cookie, setCookie] = useState(getCookie());
 
     const updateCookie = (value, numberOfDays) => {
+        console.log("updateCookie",value);
         setCookie(value);
         setItem(key, value, numberOfDays);
     };

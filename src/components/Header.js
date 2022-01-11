@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from 'react-router-dom';
 
 import useToken from "./useToken"
+import useCookie from "../components/useCookie";
 
 import "./Header.css";
 
@@ -9,15 +10,17 @@ function Header(){
     const MenuItem = ({active, children, to}) =>(
         <div className="menu-item">{children}</div>
     );
-
-    const {token, setToken} = useToken();
-    if(!token || token == undefined){
+    //problem : 한 번 로딩되면 더이상 체크안하는거 같음
+    const [session, updateCookie] = useCookie("SESSION",null);
+    console.log(session);
+    const {token, setToken} = useCookie();
+    if(!session || session == undefined){
         return(
             <div>
                 <div className="logo">Menu</div>
                 <div className="menu">
                     <Link to="/"><MenuItem>홈</MenuItem></Link>
-                    <Link to="/about"><MenuItem>인기매물</MenuItem></Link>
+                    <Link to="/post-list"><MenuItem>인기매물</MenuItem></Link>
                     <Link to="/posts"><MenuItem>글쓰기</MenuItem></Link>
                     <Link to="/invoices"><MenuItem>디테일</MenuItem></Link>
                     <Link to="/signup"><MenuItem>회원가입</MenuItem></Link>
@@ -32,10 +35,10 @@ function Header(){
                 <div className="logo">Menu</div>
                 <div className="menu">
                     <Link to="/"><MenuItem>홈</MenuItem></Link>
-                    <Link to="/about"><MenuItem>인기매물</MenuItem></Link>
-                    <Link to="/posts"><MenuItem>글쓰기</MenuItem></Link>
+                    <Link to="/post-list"><MenuItem>인기매물</MenuItem></Link>
+                    <Link to="/post-save"><MenuItem>글쓰기</MenuItem></Link>
                     <Link to="/invoices"><MenuItem>디테일</MenuItem></Link>
-                    <Link to="/profile"><MenuItem>프로파일</MenuItem></Link>
+                    <Link to="/my-posts"><MenuItem>내 판매글</MenuItem></Link>
                     <Link to="/logout"><MenuItem>로그아웃</MenuItem></Link>
                 </div>
             </div>

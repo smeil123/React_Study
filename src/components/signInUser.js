@@ -6,7 +6,7 @@ import { FastRewind } from '@material-ui/icons';
 // API Call
 export default async function signInUser(credentials){
     try{
-        const res = await axios.post('/api/v1/user/signIn',  JSON.stringify(credentials),{
+        const res = await axios.post('/api/v1/signin',  JSON.stringify(credentials),{
             headers : {
                 'Content-Type' : 'application/json'
             }

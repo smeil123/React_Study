@@ -9,6 +9,8 @@ import Logout from './components/Logout';
 import Home from "./containers/Home";
 import About from "./containers/About";
 import Posts from "./containers/Posts.jsx";
+import MyPosts from "./containers/Post/MyPosts.js"
+import PostList from "./containers/Post/PostList.jsx"
 import Invoices from "./containers/Invoices.jsx";
 import Invoice from "./containers/Invoice";
 
@@ -19,9 +21,6 @@ import Profile from './containers/Profile';
 
 function App(){
 
-    const { token, setToken } = useToken();
-    // if(!token || token==undefined){
-    // }
         return (
             <div className="App">
                 <h1>WaterMelon Market</h1>
@@ -30,7 +29,9 @@ function App(){
                     <Route path="/" element={<Home />} />
                     <Route path="profile" element={<Profile />} />
                     <Route path="about" element={<About />} />
-                    <Route path="posts" element={<Posts />} />
+                    <Route path="post-save" element={<Posts />} />
+                    <Route path="post-list" element={<PostList />} />
+                    <Route path="my-posts" element={<MyPosts />} />
                     <Route path="invoices" element={<Invoices />}>
                         <Route
                             index element={
@@ -40,7 +41,7 @@ function App(){
                             }/>
                         <Route path=":invoiceId" element={<Invoice />} /> 
                     </Route>
-                    <Route path="signin" element={<Signin setToken={setToken}/>} />
+                    <Route path="signin" element={<Signin />} />
                     <Route path="logout" element={<Logout />} />
                     <Route path="signup" element={<Signup />} />
                     <Route path="*"

@@ -63,7 +63,13 @@ export default function Signin(){
     const [session, updateCookie] = useCookie("SESSION",null);
 
     useEffect(()=>{
-        deleteCookie("SESSION");
+        //deleteCookie("SESSION");
+        if (session != null || session != undefined){
+            //이미 로그인되어 있으면
+            alert("이미 로그인되어 있음");
+            window.location.href = "/";
+        }
+
     })
 
     const handleSubmit = async e =>{
@@ -74,16 +80,14 @@ export default function Signin(){
         });
         try{
             console.log(res);
-            if(res.status == 200){                
+            if(res.status == 201){                
                 swal("Succeess","로그인 성공", "success",{
                     buttons : false.valueOf,
                     timer : 2000,
                 })
                 .then((value)=> {
-                    // local 에 필요값들 저장해주고, profile redirect
-                    console.log(document.cookie);
-                    updateCookie("MjMxZWZmNjItMmQxZi00MGRjLWExNGQtYzk4YmJlMjJlN2Rh",1);
-                    localStorage.setItem('token', "MjMxZWZmNjItMmQxZi00MGRjLWExNGQtYzk4YmJlMjJlN2Rh");
+                    console.log(document.cookie.SESSION);
+                    // 필요시에 로컬에 값 저장
                     localStorage.setItem('email', email);
 
                     window.location.href = "/";

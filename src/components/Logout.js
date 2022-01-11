@@ -1,10 +1,12 @@
 import React from 'react';
 import axios from 'axios';
+
+import deleteCookie from './deleteCookie';
 // API Call
 async function logout(){
     try{
-        localStorage.clear();    
-        const res = await axios.post('/api/v1/user/signout',{
+        deleteCookie("SESSION");
+        const res = await axios.post('/api/v1/signout',{
             headers : {
                 'Content-Type' : 'application/json'
             }
@@ -23,5 +25,3 @@ export default async function Logout(){
     window.location.href = "/";    
     return;
 }
-
-//export default withRouter(Logout);
