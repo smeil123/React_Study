@@ -2,21 +2,21 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {Routes, Route, Link} from 'react-router-dom';
 
-import Header from "./components/Header"
-import useToken from "./components/useToken"
-import Logout from './components/Logout';
+import Header from "./containers/common/Header";
+import useToken from "./components/common/useToken";
+import Logout from './components/user/logout';
 
-import Home from "./containers/Home";
+import Home from "./containers/common/Home";
 import About from "./containers/About";
-import Posts from "./containers/Posts.jsx";
-import MyPosts from "./containers/Post/MyPosts.js"
-import PostList from "./containers/Post/PostList.jsx"
+import Posts from "./containers/post/Posts.jsx";
+import MyPosts from "./containers/post/MyPosts.js";
+import PostList from "./containers/post/PostList.jsx";
 import Invoices from "./containers/Invoices.jsx";
 import Invoice from "./containers/Invoice";
 
-import Signin from './containers/Login';
-import Signup from './containers/Signup';
-import Profile from './containers/Profile';
+import Signin from './containers/user/SingIn';
+import Signup from './containers/user/Signup';
+import Profile from './containers/user/Profile';
 
 
 function App(){

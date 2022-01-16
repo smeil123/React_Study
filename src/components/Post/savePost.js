@@ -2,7 +2,7 @@ import React, { Component, useState } from 'react';
 import axios from 'axios';
 
 // API Call
-async function save(post){
+async function postPost(post){
     //이미지 메타데이터를 처리하기 위해 form-data로 데이터를 전송해줘야함
     let form = new FormData()
     console.log(post)
@@ -19,11 +19,15 @@ async function save(post){
         })
         return res;
     }catch(err){
-        console.log(err);
-        return  "생성 실패";
+        if(err.response){
+            return err.response.data;
+        }
+        else {
+            return false;
+        }
     }
 }
 
 export default async function savePost(post){
-    return await save(post);
+    return await postPost(post);
 }

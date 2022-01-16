@@ -13,9 +13,8 @@ import swal from 'sweetalert';
 import { ErrorBoundary,errorService } from 'react-error-boundary';
 import axios from 'axios';
 
-import useCookie from "../components/useCookie";
-import deleteCookie from "../components/deleteCookie"
-import signInUser from "../components/signInUser";
+import useCookie from "../../components/common/useCookie";
+import signInUser from "../../components/user/signIn";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,7 +55,7 @@ function MyFallbackComponent({error, resetErrorBoundary}){
 }
 
 
-export default function Signin(){
+export default function SignIn(){
     const classes = useStyles();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();

@@ -1,9 +1,9 @@
 import React, { Component, useState } from 'react';
 import { Button, TextField,MenuItem, Box,Input, IconButton} from '@material-ui/core';
-import axios from 'axios';
 
-import { getCategory } from "../data/categories"
-import savePost from "../components/Post/savePost";
+import { getCategory } from "../../data/categories";
+import savePost from "../../components/post/savePost";
+import {getConfRex} from "../../components/common/confRex.jsx";
 
 export default function Posts(){
     const [category, setCategory] = useState('A');
@@ -28,11 +28,14 @@ export default function Posts(){
 
         try{
             console.log(res);
-            if(res.status == 200 || res.status == 201){
+            if(res.status === 200 || res.status === 201){
                 alert("게시글 등록 성공");
 
                 //To-Do : 해당 게시글로 이동하기
                 window.location.href = "/";
+            }else if(res.status == 400){
+                alert(res.message);
+                window.location.href = 'signin'
             }else{
                 alert(res.message);
                 console.log(res.message);
@@ -91,7 +94,7 @@ export default function Posts(){
             <div>
                 <TextField
                     id="standard-required"
-                    error={NUMBER.test(price) || price ==='' ? false : true}
+                    error={getConfRex("NUMBER",price) || price ==='' ? false : true}
                     helperText={price_error}
                     label="₩ 가격"
                     margin="normal"

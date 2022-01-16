@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 // import Card from '@material-ui/core/Card';
 // import CardContent from '@material-ui/core/CardContent';
 
-import getUser from "../components/getUser";
+import getUser from "../../components/user/getUser";
 
 const useStyles = makeStyles((theme) => ({
   root: {
