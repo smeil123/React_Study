@@ -6,9 +6,10 @@ import getUser from '../../components/user/getUser';
 import singUp from '../../components/user/singUp';
 import {getConfRex} from "../../components/common/confRex.jsx";
 
-async function checkEmail(email){
+async function checkDoubleEmail(email){
     const result = await getUser(email);
-    if(result == null){
+    console.log(result);
+    if(result == null || result == ''){
         //중복없음
         alert("중복없음");
         return true;
@@ -32,21 +33,21 @@ export default function Signup(){
     const handleSubmit = async e =>{
         e.preventDefault();
         //아이디 중복확인
-        //const doubleCheckEmail = await checkEmail(email);
-        const doubleCheckEmail = true;
-        if(!doubleCheckEmail){
+        //const resultCheck = await checkDoubleEmail(email);
+        const resultCheck = true;
+        if(!resultCheck){
             alert("이메일 중복");
         }else{
             const res = await singUp({
-                    email,
-                    password,
-                    nickname,
-                    role
+                email,
+                password,
+                nickname,
+                role
             });
             try{
                 if(res.status === 200 || res.status === 201){
                     alert("가입 성공");
-
+                    
                     window.location.href = "/signin";
                 }else{
                     alert(res.message);

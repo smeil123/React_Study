@@ -1,9 +1,11 @@
 import React, { Component, useState } from 'react';
 import { Button, TextField,MenuItem, Box,Input, IconButton} from '@material-ui/core';
+import { useEffect } from 'react';
 
 import { getCategory } from "../../data/categories";
 import savePost from "../../components/post/savePost";
 import {getConfRex} from "../../components/common/confRex.jsx";
+import deleteCookie from '../../components/common/deleteCookie';
 
 export default function Posts(){
     const [category, setCategory] = useState('A');
@@ -14,8 +16,36 @@ export default function Posts(){
     
     const [price_error] = useState("숫자 입력");
 
-    const NUMBER = /^[0-9]*$/ ;
     let categories = getCategory();
+
+    useEffect(()=>{
+        preview();
+
+        return () => preview();
+    });
+
+    const preview = () => {
+        if (!files || files =='') return false;
+
+        const imgEl = document.querySelector('.img-box');
+        console.log("preview1/",files[0]);
+        var reader = new FileReader();
+
+        // onload : 읽기가 성공했을 때
+        // onloadend : 읽기가 완료되었을 때(성공여부 상관없이)
+        reader.onloadend= e =>(
+            // 읽기가 정상적으로 완료되면 발생하는 이벤트
+            imgEl.style.backgroundImage = `url(${reader.result})`);
+        
+        reader.readAsDataURL(files[0]); // file을 읽음
+        console.log("preview2/",reader);
+    }
+
+    const onLoadFile = async e =>{
+        const file = e.target.files;
+        console.log("onLoadFile/",file);
+        setFiles(file);
+    }
 
     const handleSubmit = async e =>{
         e.preventDefault();
@@ -23,9 +53,9 @@ export default function Posts(){
             category,
             title,
             price,
-            content
+            content,
+            files
         });
-
         try{
             console.log(res);
             if(res.status === 200 || res.status === 201){
@@ -34,6 +64,8 @@ export default function Posts(){
                 //To-Do : 해당 게시글로 이동하기
                 window.location.href = "/";
             }else if(res.status == 400){
+                //만료된 세션아이디인 경우 삭제
+                deleteCookie("SESSION");
                 alert(res.message);
                 window.location.href = 'signin'
             }else{
@@ -50,6 +82,14 @@ export default function Posts(){
     return (
         <div>
             <h1>중고거래 글쓰기</h1>
+                <div className = "custom-img">
+                    <strong>업로드된 이미지</strong>
+                    <div className="img-wrap">
+                        <div className="img-box"  style={{"backgroundColor": "#efefef","background-size":"cover","width":"200px", "height" : "300px"}}>
+                        <img src="" alt="" />
+                        </div>
+                    </div>
+            </div>
             <Box
                 component="form"
                 sx={{
@@ -61,7 +101,7 @@ export default function Posts(){
             >
             <div>
                 <label htmlFor="icon-button-file">
-                    <Input accept="image/*" id="icon-button-file" type="file" />
+                    <Input accept="image/*" id="icon-button-file" type="file" onChange={onLoadFile}/>
                     <IconButton color="primary" aria-label="upload picture" component="span" />
                 </label>
             </div>
@@ -115,7 +155,7 @@ export default function Posts(){
                     label="판매 글"
                     multiline
                     rows={4}
-                    defaultValue="게시글 내용을 작성해주세요. 가품 및 판매금지품목은 게시가 제한될 수 있어요."
+                    placeholder="게시글 내용을 작성해주세요. 가품 및 판매금지품목은 게시가 제한될 수 있어요."
                     onChange={e => setContent(e.target.value)}
                 />
             </div>
