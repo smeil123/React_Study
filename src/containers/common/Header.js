@@ -6,6 +6,8 @@ import useCookie from "../../components/common/useCookie";
 
 import "./Header.css";
 
+import Logout from '../../components/user/logout';
+
 function Header(){
     const MenuItem = ({active, children, to}) =>(
         <div className="menu-item">{children}</div>
@@ -39,7 +41,7 @@ function Header(){
                     <Link to="/post-save"><MenuItem>글쓰기</MenuItem></Link>
                     <Link to="/invoices"><MenuItem>디테일</MenuItem></Link>
                     <Link to="/my-posts"><MenuItem>내 판매글</MenuItem></Link>
-                    <Link to="/logout"><MenuItem>로그아웃</MenuItem></Link>
+                    <MenuItem><button onClick={Logout}>로그아웃</button></MenuItem>
                 </div>
             </div>
         );

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
 import {Routes, Route, Link} from 'react-router-dom';
 
 import Header from "./containers/common/Header";
@@ -42,7 +41,7 @@ function App(){
                         <Route path=":invoiceId" element={<Invoice />} /> 
                     </Route>
                     <Route path="signin" element={<Signin />} />
-                    <Route path="logout" element={<Logout />} />
+                    {/* <Route path="logout" element={<Logout />} /> */}
                     <Route path="signup" element={<Signup />} />
                     <Route path="*"
                         element={

@@ -13,38 +13,46 @@ export default function Posts(){
     const [price, setPrice] = useState(0);
     const [content, setContent] = useState('');
     const [files, setFiles] = useState('');
-    
+    const [imagePreview, setImagePreview] = useState(null);
+    const [imgBase64, setImgBase64] = useState(""); // 파일 base64
+    const [imgFile, setImgFile] = useState(null);	//파일	
+
     const [price_error] = useState("숫자 입력");
 
     let categories = getCategory();
 
+    const imgItem = (children) =>(
+        <img className="img-preview" src={children} width='300px' height='300px'></img>
+    );
+
     useEffect(()=>{
-        preview();
+        //state가 바뀔때마다 호출
+        //preview();
 
-        return () => preview();
+        //return () => preview();
     });
-
-    const preview = () => {
-        if (!files || files =='') return false;
-
-        const imgEl = document.querySelector('.img-box');
-        console.log("preview1/",files[0]);
-        var reader = new FileReader();
-
-        // onload : 읽기가 성공했을 때
-        // onloadend : 읽기가 완료되었을 때(성공여부 상관없이)
-        reader.onloadend= e =>(
-            // 읽기가 정상적으로 완료되면 발생하는 이벤트
-            imgEl.style.backgroundImage = `url(${reader.result})`);
-        
-        reader.readAsDataURL(files[0]); // file을 읽음
-        console.log("preview2/",reader);
-    }
 
     const onLoadFile = async e =>{
         const file = e.target.files;
-        console.log("onLoadFile/",file);
         setFiles(file);
+
+        var reader = new FileReader();
+
+        reader.onloadend= ()=>{
+            const base64 = reader.result;
+            if(base64){
+                console.log('onloadend');
+                setImgBase64(base64.toString());
+                setImagePreview(imgItem(base64.toString()));
+                console.log(imagePreview);
+            }
+        }
+
+        if (file[0]){
+            reader.readAsDataURL(file[0]);
+            setImgFile(file[0]);
+        }
+        
     }
 
     const handleSubmit = async e =>{
@@ -85,8 +93,8 @@ export default function Posts(){
                 <div className = "custom-img">
                     <strong>업로드된 이미지</strong>
                     <div className="img-wrap">
-                        <div className="img-box"  style={{"backgroundColor": "#efefef","background-size":"cover","width":"200px", "height" : "300px"}}>
-                        <img src="" alt="" />
+                        <div className="img-box"  style={{"backgroundColor": "#efefef","background-size":"fill","width":"300px", "height" : "300px"}}>
+                            {imagePreview}
                         </div>
                     </div>
             </div>
