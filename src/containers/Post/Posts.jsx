@@ -7,6 +7,8 @@ import savePost from "../../components/post/savePost";
 import {getConfRex} from "../../components/common/confRex.jsx";
 import deleteCookie from '../../components/common/deleteCookie';
 
+import '../../index.css';
+
 export default function Posts(){
     const [category, setCategory] = useState('A');
     const [title, setTitle] = useState('');
@@ -15,44 +17,58 @@ export default function Posts(){
     const [files, setFiles] = useState('');
     const [imagePreview, setImagePreview] = useState(null);
     const [imgBase64, setImgBase64] = useState(""); // 파일 base64
-    const [imgFile, setImgFile] = useState(null);	//파일	
+    const [imgFiles, setImgFiles] = useState([]);//파일	
 
     const [price_error] = useState("숫자 입력");
 
     let categories = getCategory();
 
-    const imgItem = (children) =>(
-        <img className="img-preview" src={children} width='300px' height='300px'></img>
+    const imgItem = () => imgFiles.map((imgFile, index)=>(
+                <div key={index}>
+                    <div>
+                        <img className="img-preview" src={imgFile} width='300px' height='300px'></img>
+                    </div>
+                    <div>
+                        <button id={index} onClick={e => deleteImg(e.target.id)}>X</button>
+                    </div>
+                </div>
+            
+        )
     );
-
+    
     useEffect(()=>{
-        //state가 바뀔때마다 호출
+        //state가 바뀔때마다 호출되다보니, state를 사용하기 어려워짐
         //preview();
-
-        //return () => preview();
     });
+
+    const deleteImg = e => {
+        if(confirm("사진을 삭제?")){
+            setImgFiles(imgFiles.splice(e,1));
+            setImagePreview(imgItem);
+        }else{
+            return;
+        }
+    }
 
     const onLoadFile = async e =>{
         const file = e.target.files;
         setFiles(file);
 
         var reader = new FileReader();
-
         reader.onloadend= ()=>{
             const base64 = reader.result;
-            if(base64){
-                console.log('onloadend');
-                setImgBase64(base64.toString());
-                setImagePreview(imgItem(base64.toString()));
-                console.log(imagePreview);
-            }
+            // setImgFiles([...imgFiles,reader.result]); //제대로 안들어가는거 같음, 첫번째 값만 인식못함
+            const temp = imgFiles;
+            temp.unshift(base64);
+            setImgFiles(temp);
+            setImagePreview(imgItem());
         }
 
-        if (file[0]){
-            reader.readAsDataURL(file[0]);
-            setImgFile(file[0]);
+        reader.onerror = () =>{
+            alert("업로드 실패\n\n"+reader.error);
         }
         
+        reader.readAsDataURL(file[0]);
     }
 
     const handleSubmit = async e =>{
@@ -92,10 +108,12 @@ export default function Posts(){
             <h1>중고거래 글쓰기</h1>
                 <div className = "custom-img">
                     <strong>업로드된 이미지</strong>
-                    <div className="img-wrap">
-                        <div className="img-box"  style={{"backgroundColor": "#efefef","background-size":"fill","width":"300px", "height" : "300px"}}>
-                            {imagePreview}
-                        </div>
+                    
+                    <div className="grid-scroll-wrap"ß>
+                    {imagePreview === null ?
+                        <div className="img-box"  style={{"backgroundColor": "#efefef","width":"300px", "height" : "300px"}}></div>
+                        : imagePreview
+                    }                            
                     </div>
             </div>
             <Box
@@ -109,7 +127,8 @@ export default function Posts(){
             >
             <div>
                 <label htmlFor="icon-button-file">
-                    <Input accept="image/*" id="icon-button-file" type="file" onChange={onLoadFile}/>
+                    {/* 현재는 동일 사진을 중복해서 올리면 인식 못함. onChange */}
+                    <Input accept="image/*" id="icon-button-file" type="file" onChange={onLoadFile}/> 
                     <IconButton color="primary" aria-label="upload picture" component="span" />
                 </label>
             </div>

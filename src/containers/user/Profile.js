@@ -68,7 +68,7 @@ export default async function Profile(){
                     </div>
                 </Toolbar>
             </AppBar>
-            <Card className={classes.rooot} variant="outlined">
+            <Card className={classes.root} variant="outlined">
                 <CardContent>
                     <Avatar src={user.avatar} className={classes.large} />
                     <Typography variant="h5">
